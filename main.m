@@ -90,21 +90,23 @@ end
 
 % 迭代
 
-for k = 1:20
-     for i = 1 : node
-         x = xy(i,:);
-         x = fminsearch(@(x)fun(i,x,xy,anchor,netss,netsa),x);  % 迭代函数
-         xy(i,:) = x;
-     end
-end
+% for k = 1:20
+%      for i = 1 : node
+%          x = xy(i,:);
+%          x = fminsearch(@(x)fun(i,x,xy,anchor,netss,netsa),x);  % 迭代函数
+%          xy(i,:) = x;
+%      end
+% end
 
- %% 绘制图像
+ %% 绘制结果图
+ 
 if(dim == 2)  % 二维图
     plot(anchor(1,:),anchor(2,:), '*r');
     hold on;
     plot(xy(:,1),xy(:,2),'ob');
     hold on;
     plot(sensors(:,1),sensors(:,2),'*g');
+    legend('参考节点坐标','未知节点估计坐标','未知节点实际坐标');
 else          % 三维图
     plot3(anchor(1,:),anchor(2,:),anchor(3,:), '*b');
     hold on;
@@ -130,4 +132,4 @@ for i = 1 : node
 end
 
 err = err/num;
-err/0.4
+disp(err/0.4);
