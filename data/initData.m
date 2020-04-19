@@ -25,7 +25,7 @@ for i = 1:20
     end
 end
 
-% % 作图查看
+% 作图查看
 % plot(anchor(1,:),anchor(2,:), '*r');    % 画锚点
 % hold on;
 % plot(sensors(:,1),sensors(:,2),'ob');     % 画未知节点的坐标
