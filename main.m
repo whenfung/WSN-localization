@@ -1,56 +1,56 @@
 clear;clc;
 
-%% ÔØÈë·ÂÕæÊı¾İ
+%% è½½å…¥ä»¿çœŸæ•°æ®
 cd data;
 initData;
 cd ..;
 
-%% Ç°ÆÚ´¦Àí
+%% å‰æœŸå¤„ç†
 
-[dim,~] = size(anchor);      % Î¬¶È
-[anch, node] = size(netsa);  % Ãªµã anch ºÍ½Úµã
+[dim,~] = size(anchor);      % ç»´åº¦
+[anch, node] = size(netsa);  % é”šç‚¹ anch å’ŒèŠ‚ç‚¹
 
-netss = [netss,netsa'];                        % Æ´½ÓÎª  20*24                
-netss = [netss;netsa,zeros(anch,anch)];        % À©¿í    24*24
+netss = [netss,netsa'];                        % æ‹¼æ¥ä¸º  20*24                
+netss = [netss;netsa,zeros(anch,anch)];        % æ‰©å®½    24*24
 
-%% ¼ÆËãÌøÊı£¬±£´æÂ·¾¶
+%% è®¡ç®—è·³æ•°ï¼Œä¿å­˜è·¯å¾„
 
-step = zeros(anch,node+anch);                  % ×îĞ¡ÌøÊı¾ØÕó
-path = zeros(anch,node+anch);                  % Â·¾¶¾ØÕó
+step = zeros(anch,node+anch);                  % æœ€å°è·³æ•°çŸ©é˜µ
+path = zeros(anch,node+anch);                  % è·¯å¾„çŸ©é˜µ
 
 for i = 1:anch
     for j =1:node
         if netsa(i,j) ~= 0
-            step(i,j) = 1;                     % ÓëÃªµãÖ±½ÓÏàÁ¬µÄÎ´Öª½Úµã Hop=1
+            step(i,j) = 1;                     % ä¸é”šç‚¹ç›´æ¥ç›¸è¿çš„æœªçŸ¥èŠ‚ç‚¹ Hop=1
         end
     end
 end
 
-s=1;         % Îª¿í¶È±éÀú×÷×¼±¸                                
+s=1;         % ä¸ºå®½åº¦éå†ä½œå‡†å¤‡                                
 
 while(true)
-    temp = step;                                                       % ÁÙÊ±¾ØÕóÓÃÀ´ÅĞ¶ÏÊÇ·ñ¸üĞÂÍê±Ï
-    for i = 1:anch                                                     % 4 ¸öÃªµã·Ö±ğ¹ã²¥
+    temp = step;                                                       % ä¸´æ—¶çŸ©é˜µç”¨æ¥åˆ¤æ–­æ˜¯å¦æ›´æ–°å®Œæ¯•
+    for i = 1:anch                                                     % 4 ä¸ªé”šç‚¹åˆ†åˆ«å¹¿æ’­
         for j =1:(node+anch)    
             for k = 1:(node+anch)
-                if step(i,j) == s && netss(j,k) ~= 0 && step(i,k) == 0 % ±éÀúÎ´ÖªµÄµã
-                    path(i,k) = j;                                     % ´æ´¢µ±Ç°½áµãµÄÉÏÒ»½Úµã
-                    step(i,k) = s + 1;                                 % Óëµ±Ç°²ãÏàÁ¬µÄ¸³Öµµ½ÏÂÒ»²ã
+                if step(i,j) == s && netss(j,k) ~= 0 && step(i,k) == 0 % éå†æœªçŸ¥çš„ç‚¹
+                    path(i,k) = j;                                     % å­˜å‚¨å½“å‰ç»“ç‚¹çš„ä¸Šä¸€èŠ‚ç‚¹
+                    step(i,k) = s + 1;                                 % ä¸å½“å‰å±‚ç›¸è¿çš„èµ‹å€¼åˆ°ä¸‹ä¸€å±‚
                 end
             end
         end
     end
     if isequal(temp, step)
-        break;                                                         % ×îĞ¡ÌøÊı¼ÆËãÍê³ÉÌø³öÑ­»·
+        break;                                                         % æœ€å°è·³æ•°è®¡ç®—å®Œæˆè·³å‡ºå¾ªç¯
     end
     s = s + 1;
 end
 
 for i = 1:anch
-    step(i,node+i)=0;                      % ÊÖ¶¯Ğ£Õı
+    step(i,node+i)=0;                      % æ‰‹åŠ¨æ ¡æ­£
 end
 
-%% ¹À¼ÆÂ·¾¶
+%% ä¼°è®¡è·¯å¾„
 dist = zeros(anch, node + anch);                                    
 
 for i = 1 : anch
@@ -68,9 +68,9 @@ for i = 1 : anch
     end
 end
 
-%% ÀûÓÃ¹À¼Æ¾àÀë¶¨Î»
+%% åˆ©ç”¨ä¼°è®¡è·ç¦»å®šä½
 
-xy = zeros(node,dim);       % ×ø±ê           
+xy = zeros(node,dim);       % åæ ‡           
 
 for i = 1:node
     A = zeros(anch-1,dim);
@@ -83,33 +83,33 @@ for i = 1:node
         end
         B(j) = B(j) + dist(anch,i)^2-dist(j,i)^2;
     end
-    C = A\B;
+    C = A\B;     % å¤šè¾¹å®šä½
     xy(i,1) = C(1);
     xy(i,2) = C(2);
 end
 
-accuracy;  % ¼ÆËã²¢ÏÔÊ¾Ïà¶Ô¾«¶È
+accuracy;  % è®¡ç®—å¹¶æ˜¾ç¤ºç›¸å¯¹ç²¾åº¦
 
-%% µü´ú
+%% è¿­ä»£
 
 for k = 1:5
      for i = 1 : node
          x = xy(i,:);
-         x = fminsearch(@(x)fun(i,x,xy,anchor,netss,netsa),x);  % µü´úº¯Êı
+         x = fminsearch(@(x)fun(i,x,xy,anchor,netss,netsa),x);  % è¿­ä»£å‡½æ•°
          xy(i,:) = x;
      end
 end
 
- %% »æÖÆ½á¹ûÍ¼
+ %% ç»˜åˆ¶ç»“æœå›¾
  
-if(dim == 2)  % ¶şÎ¬Í¼
+if(dim == 2)  % äºŒç»´å›¾
     plot(anchor(1,:),anchor(2,:), '*r');
     hold on;
     plot(xy(:,1),xy(:,2),'ob');
     hold on;
     plot(sensors(:,1),sensors(:,2),'*g');
-    legend('²Î¿¼½Úµã×ø±ê','Î´Öª½Úµã¹À¼Æ×ø±ê','Î´Öª½ÚµãÊµ¼Ê×ø±ê');
-else          % ÈıÎ¬Í¼
+    legend('å‚è€ƒèŠ‚ç‚¹åæ ‡','æœªçŸ¥èŠ‚ç‚¹ä¼°è®¡åæ ‡','æœªçŸ¥èŠ‚ç‚¹å®é™…åæ ‡');
+else          % ä¸‰ç»´å›¾
     plot3(anchor(1,:),anchor(2,:),anchor(3,:), '*b');
     hold on;
     plot3(xy(:,1),xy(:,2),xy(:,3),'or');
@@ -117,4 +117,4 @@ else          % ÈıÎ¬Í¼
     %plot3(sensors(:,1),sensors(:,2),sensors(:,3),'*b');
 end
 
-accuracy;  % ¼ÆËã²¢ÏÔÊ¾Ïà¶Ô¾«¶È
+accuracy;  % è®¡ç®—å¹¶æ˜¾ç¤ºç›¸å¯¹ç²¾åº¦
